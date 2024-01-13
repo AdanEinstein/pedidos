@@ -3,7 +3,6 @@ package com.adaneinstein.pedidos.service.impl;
 import com.adaneinstein.pedidos.model.Order;
 import com.adaneinstein.pedidos.repository.OrderRepository;
 import com.adaneinstein.pedidos.service.Service;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Date;

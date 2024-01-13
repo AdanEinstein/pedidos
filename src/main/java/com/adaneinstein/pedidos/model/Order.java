@@ -6,7 +6,13 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.CreatedDate;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.Optional;
 
@@ -22,7 +28,8 @@ public class Order {
     @Column(nullable = false, unique = true)
     private String protocol;
     @Column
-    private Date createdAt;
+    @Temporal(TemporalType.DATE)
+    private Date createdAt = new Date();
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
@@ -36,7 +43,7 @@ public class Order {
 
     public Order(OrderRequestDTO orderRequestDTO) {
         orderRequestDTO.id().ifPresent(this::setId);
-        this.setCreatedAt(orderRequestDTO.createdAt().orElse(new Date()));
+        orderRequestDTO.createdAt().ifPresent(this::setCreatedAt);
         this.setCount(orderRequestDTO.count().orElse(1));
         this.protocol = orderRequestDTO.protocol();
         this.name = orderRequestDTO.name();
